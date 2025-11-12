@@ -1,0 +1,36 @@
+services:
+  app1:
+    image: ssotestapp:v0.0.1
+    build:
+      context: .
+    environment:
+      - AUTH_CLIENT_ID=clientid1
+      - AUTH_SECRET=topsecret1
+      - APP_HOST=app1.home
+      - APP_PORT=3001
+    ports:
+      - 3001:3001
+    extra_hosts:
+      - "app1.home:host-gateway"
+      - "app2.home:host-gateway"
+      - "auth.home:host-gateway"
+    entrypoint: /app/startapp.sh
+    tty: true
+    stdin_open: true
+
+  app2:
+    image: ssotestapp:v0.0.1
+    environment:
+      - AUTH_CLIENT_ID=clientid2
+      - AUTH_SECRET=topsecret2
+      - APP_HOST=app2.home
+      - APP_PORT=3002
+    ports:
+      - 3002:3002
+    extra_hosts:
+      - "app1.home:host-gateway"
+      - "app2.home:host-gateway"
+      - "auth.home:host-gateway"
+    entrypoint: /app/startapp.sh
+    tty: true
+    stdin_open: true
